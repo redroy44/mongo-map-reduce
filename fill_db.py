@@ -13,6 +13,6 @@ def main():
         print(id)
         result = coll.insert_one({'name': id.split('.')[0], 'content': list(gutenberg.words(id))})
 
-    print('Collection has {} elements'.format(coll.count()))
+    print('Collection has {} documents'.format(coll.count()))
 if __name__ == '__main__':
     main()

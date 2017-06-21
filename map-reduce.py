@@ -6,7 +6,7 @@ from utils import connect_db
 def main():
     db, coll = connect_db()
     print(coll)
-    print('Collection has {} elements'.format(coll.count()))
+    print('Collection has {} documents'.format(coll.count()))
 
     map = """
     function() {
@@ -24,13 +24,17 @@ def main():
             }
     """
 
-    # Results stored in collection "word_count"
+    # word count for all documents
+    query = {}
+    # filter documents
     query = { '$or': [{'name': 'shakespeare-hamlet'}, {'name': 'shakespeare-macbeth'}]}
-    coll.map_reduce(map, reduce, 'word_count', query=query, limit=2)
-    result = db['word_count']
-    cursor = result.find().sort('value', pymongo.DESCENDING).limit(25)
 
-    for elem in cursor:
+    coll.map_reduce(map, reduce, 'word_count', query=query, limit=2)
+    # Results stored in collection "word_count"
+    result = db['word_count']
+    cursor = result.find().sort('value', pymongo.DESCENDING)
+    print('Word count for {} words'.format(cursor.count()))
+    for elem in cursor.limit(25):
         print(elem)
 
 

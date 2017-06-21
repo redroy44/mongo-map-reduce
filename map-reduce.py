@@ -27,9 +27,9 @@ def main():
     # word count for all documents
     query = {}
     # filter documents
-    query = { '$or': [{'name': 'shakespeare-hamlet'}, {'name': 'shakespeare-macbeth'}]}
+    #query = { '$or': [{'name': 'shakespeare-hamlet'}, {'name': 'shakespeare-macbeth'}]}
 
-    coll.map_reduce(map, reduce, 'word_count', query=query, limit=2)
+    coll.map_reduce(map, reduce, 'word_count', query=query)
     # Results stored in collection "word_count"
     result = db['word_count']
     cursor = result.find().sort('value', pymongo.DESCENDING)

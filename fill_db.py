@@ -10,7 +10,7 @@ def main():
     coll.remove({})
 
     for id in gutenberg.fileids():
-        print(id)
+        print(id, len(list(gutenberg.words(id))), 'words')
         result = coll.insert_one({'name': id.split('.')[0], 'content': list(gutenberg.words(id))})
 
     print('Collection has {} documents'.format(coll.count()))
